@@ -65,13 +65,35 @@ if (contactForm) {
         
         if (name && email) {
             const subject = `Contacto desde Portafolio - ${name}`;
-            
-            // Correo actualizado para Fernanda
             window.location.href = `mailto:fenaneiram@gmail.com?subject=${encodeURIComponent(subject)}`;
-            
             contactForm.reset();
         }
     });
 }
+
+const langButtons = document.querySelectorAll('.lang-btn');
+const langTexts = document.querySelectorAll('.lang-text');
+const langPlaceholders = document.querySelectorAll('.lang-placeholder');
+
+langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelector('.lang-btn.active').classList.remove('active');
+        btn.classList.add('active');
+
+        const selectedLang = btn.getAttribute('data-lang');
+
+        langTexts.forEach(el => {
+            if (el.getAttribute(`data-${selectedLang}`)) {
+                el.innerHTML = el.getAttribute(`data-${selectedLang}`);
+            }
+        });
+
+        langPlaceholders.forEach(el => {
+            if (el.getAttribute(`data-${selectedLang}`)) {
+                el.placeholder = el.getAttribute(`data-${selectedLang}`);
+            }
+        });
+    });
+});
 
 document.getElementById('year').textContent = new Date().getFullYear();
